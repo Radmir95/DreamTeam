@@ -39,5 +39,21 @@ cv2.imshow('Image', binarizationArray)
 cv2.waitKey(0)
 cv2.destroyAllWindows()
 
-plt.hist(imageArray,bins=5)
-plt.show()
+#plt.hist(imageArray,bins=5)
+#plt.show()
+
+
+intValue = np.zeros(imageArray.shape)
+
+for i in range(imageArray.shape[xAxis]):
+    sum = 0
+    for j in range(imageArray.shape[yAxis]):
+        sum+= imageArray[i][j]
+        if (i == 0):
+            intValue[i][j] = sum
+        else:
+            intValue[i][j] = intValue[i-1][j] + sum
+                    
+cv2.imshow('Image', intValue)
+cv2.waitKey(0)
+cv2.destroyAllWindows()
