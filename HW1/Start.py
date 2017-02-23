@@ -4,12 +4,16 @@ import matplotlib.pyplot as plt
 
 xAxis = 0
 yAxis = 1
+cv2BlueChannel = 0
+cv2GreenChannel = 1
+cv2RedChannel = 2
 path_to_image = './images/lena_color_512.tif'
 
-def showImage(label, image):
-    cv2.imshow(label, image)
-    cv2.waitKey(0)
-    cv2.destroyAllWindows()
+def showImage(label='Image', image=None):
+    if image:
+        cv2.imshow(label, image)
+        cv2.waitKey(0)
+        cv2.destroyAllWindows()
 
 def integralImage(image):
     integralImage = np.zeros(image.shape)
@@ -37,8 +41,10 @@ def binarizationImage(image):
     return binarizationImage
 
 grayImage = cv2.imread(path_to_image, cv2.IMREAD_GRAYSCALE)
-npGrayImage = np.uint8(grayImage)
+colorImage = cv2.imread(path_to_image, cv2.IMREAD_COLOR)
 
+npGrayImage = np.uint8(grayImage)
+npColorImage = np.uint8(colorImage)
 
 mean = np.mean(npGrayImage)
 variance = np.var(npGrayImage)
@@ -58,3 +64,12 @@ plt.xlabel('Histogram')
 plt.hist(npGrayImage,bins=5)
 plt.show()       
 
+blue = npColorImage[:,:,cv2BlueChannel]
+green = npColorImage[:,:,cv2GreenChannel]
+red = npColorImage[:,:, cv2RedChannel]
+
+plt.figure()
+plt.title('Histogram GBR')
+plt.hist(blue,bins = 5)
+plt.hist(green,bins = 5)
+plt.hist(red,bins = 5)
