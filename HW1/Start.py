@@ -6,6 +6,35 @@ xAxis = 0
 yAxis = 1
 path_to_image = './images/lena_color_512.tif'
 
+def showImage(label, image):
+    cv2.imshow(label, image)
+    cv2.waitKey(0)
+    cv2.destroyAllWindows()
+
+def integralImage(image):
+    integralImage = np.zeros(image.shape)
+
+    for xPx in range(image.shape[xAxis]):
+        sum = 0
+        for yPx in range(image.shape[yAxis]):
+            sum+= image[xPx][yPx]
+            if (xPx == 0):
+                integralImage[xPx][yPx] = sum
+            else:
+                integralImage[xPx][yPx] = integralImage[xPx-1][yPx] + sum
+    return integralImage
+            
+def binarizationImage(image):
+    binarizationImage = np.zeros(image.shape)
+
+    for xPx in range(image.shape[xAxis]):
+        for yPx in range(image.shape[yAxis]):
+            if image[xPx, yPx] > median:
+                binarizationImage[xPx][yPx] = 1
+            else:
+                binarizationImage[xPx][yPx] = 0
+    
+    return binarizationImage
 
 grayImage = cv2.imread(path_to_image, cv2.IMREAD_GRAYSCALE)
 npGrayImage = np.uint8(grayImage)
@@ -19,38 +48,14 @@ print('Mean: ', mean)
 print('Variance: ', variance)
 print('Median: ', median)
 
-
-binarizationImage = np.zeros(npGrayImage.shape)
-
-for xPx in range(npGrayImage.shape[xAxis]):
-    for yPx in range(npGrayImage.shape[yAxis]):
-        if npGrayImage[xPx, yPx] > median:
-            binarizationImage[xPx][yPx] = 1
-        else:
-            binarizationImage[xPx][yPx] = 0
-                                 
-
-cv2.imshow('Binarization Image', binarizationImage)
-cv2.waitKey(0)
-cv2.destroyAllWindows()
-
+binarizationImage = binarizationImage(npGrayImage)
+                 
+showImage('Binarization Image', binarizationImage)
 
 plt.xlabel('Histogram')
 plt.hist(npGrayImage,bins=5)
-plt.show()
+plt.show()       
 
+integralImage = integralImage(npGrayImage)
 
-integralImage = np.zeros(npGrayImage.shape)
-
-for i in range(npGrayImage.shape[xAxis]):
-    sum = 0
-    for j in range(npGrayImage.shape[yAxis]):
-        sum+= npGrayImage[i][j]
-        if (i == 0):
-            integralImage[i][j] = sum
-        else:
-            integralImage[i][j] = integralImage[i-1][j] + sum
-                    
-cv2.imshow('Integral Image', integralImage)
-cv2.waitKey(0)
-cv2.destroyAllWindows()
+showImage('Integral Image', integralImage)
