@@ -49,13 +49,12 @@ print('Variance: ', variance)
 print('Median: ', median)
 
 binarizationImage = binarizationImage(npGrayImage)
-                 
 showImage('Binarization Image', binarizationImage)
+
+integralImage = integralImage(npGrayImage)
+showImage('Integral Image', integralImage)
 
 plt.xlabel('Histogram')
 plt.hist(npGrayImage,bins=5)
 plt.show()       
 
-integralImage = integralImage(npGrayImage)
-
-showImage('Integral Image', integralImage)
