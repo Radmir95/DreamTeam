@@ -73,3 +73,7 @@ plt.title('Histogram GBR')
 plt.hist(blue,bins = 5)
 plt.hist(green,bins = 5)
 plt.hist(red,bins = 5)
+
+#bin = np.uint8(img > tr) return boolean variable
+#h, bin = np.hist()
+# we can made plt.plot(bin[:-1],h) - graphic of histogram more comfortable way
