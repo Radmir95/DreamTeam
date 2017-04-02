@@ -7,8 +7,6 @@ path_to_second_image = "./images/monkey5_002.jpg"
 
 path_to_result_image = "./output/lucasKanada.jpg"
 
-firstImage = cv2.imread(path_to_first_image,cv2.IMREAD_GRAYSCALE)
-secondImage = cv2.imread(path_to_second_image,cv2.IMREAD_GRAYSCALE)
 
 
 def convoluteImage(image, imageFilter):
@@ -68,13 +66,20 @@ def lucasKanada(firstGrayImage, secondGrayImage):
     
     imageApperture2 = np.dot(imageApperture,imageApperture)
     
-    #print(imageApperture2)
     
-    img = convoluteImage(Ix2, imageApperture2)
+    a = convoluteImage(Ix2, imageApperture2)
+    #b = convoulteImage(np.dot(Ix))
+    d = convoluteImage(Iy2, imageApperture2)
     
-    print(img)
     
-
+    print(d.shape)
+    
+firstImage = cv2.imread(path_to_first_image,cv2.IMREAD_GRAYSCALE)
+secondImage = cv2.imread(path_to_second_image,cv2.IMREAD_GRAYSCALE)
+   
+firstImage = firstImage[50:482,50:432]
+secondImage = secondImage[50:482,50:432] 
+#print(firstImage.shape)
 lucasKanadaImage = lucasKanada(firstImage, secondImage)
 
 cv2.imwrite(path_to_result_image ,firstImage)
